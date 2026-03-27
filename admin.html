@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Key - Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { padding: 40px 5%; background: var(--bg-dark); }
+        .admin-section { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid var(--card-border); margin-bottom: 30px; }
+        label { display: block; color: var(--gold); margin-top: 15px; margin-bottom: 5px; font-weight: 600; }
+        input[type="text"], input[type="number"], textarea, input[type="file"] { width: 100%; padding: 12px; background: #111; color: #fff; border: 1px solid var(--card-border); border-radius: 8px; font-family: inherit; margin-bottom: 10px; }
+        textarea { height: 100px; resize: vertical; }
+        .lg-textarea { height: 250px; font-family: monospace; font-size: 0.9rem; }
+        #login-screen { max-width: 400px; margin: 100px auto; text-align: center; }
+        #dashboard-screen { display: none; max-width: 900px; margin: 0 auto; }
+        .gallery-preview img { width: 100px; height: 100px; object-fit: cover; margin-right: 10px; border-radius: 5px; border: 1px solid var(--gold); }
+        .fb-card { background: #1a1a1a; padding: 20px; border-radius: 10px; border-left: 4px solid var(--gold); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-start;}
+        .fb-content { flex: 1; margin-right: 20px; }
+        .btn-delete { background: #b71c1c; color: #fff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-delete:hover { background: #d32f2f; }
+        details { background: #111; padding: 10px 20px; border-radius: 8px; border: 1px solid #333; margin-bottom: 15px; }
+        summary { cursor: pointer; color: var(--gold); font-weight: bold; outline: none; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. LOGIN SCREEN -->
+    <div id="login-screen" class="admin-section">
+        <h2 style="color: var(--gold); margin-bottom: 20px;">Master Key Admin Portal</h2>
+        <input type="text" id="admin-user" placeholder="Username">
+        <input type="password" id="admin-pass" placeholder="Password">
+        <button id="btn-login" class="cta-button" style="width: 100%; margin-top: 20px;">Log In</button>
+        <p id="login-err" style="color: red; margin-top: 15px; display: none;">Invalid credentials!</p>
+    </div>
+
+    <!-- 2. DASHBOARD SCREEN -->
+    <div id="dashboard-screen">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--card-border); padding-bottom: 20px;">
+            <h1 style="color: var(--gold);">Website Content Manager</h1>
+            <div>
+                <a href="index.html" target="_blank" style="color: #fff; text-decoration: none; margin-right: 20px;">&larr; View Website</a>
+                <button id="btn-logout" style="background: transparent; color: var(--text-muted); border: 1px solid var(--card-border); padding: 5px 15px; border-radius: 5px; cursor: pointer;">Logout</button>
+            </div>
+        </div>
+
+        <!-- Text Content Settings -->
+        <div class="admin-section">
+            <h3 style="color: #fff; margin-bottom: 15px; font-size: 1.5rem;">Main Texts & Pricing</h3>
+            
+            <label>Hero Title (English) - Use &lt;br&gt; for new line</label>
+            <input type="text" id="val-hero-title-en">
+            
+            <label>Hero Title (Sinhala)</label>
+            <input type="text" id="val-hero-title-si">
+
+            <label>Hero Description (English)</label>
+            <textarea id="val-hero-desc-en"></textarea>
+            
+            <label>Hero Description (Sinhala)</label>
+            <textarea id="val-hero-desc-si"></textarea>
+
+            <label>Book Price (LKR Value)</label>
+            <input type="number" id="val-price" style="max-width: 200px;" placeholder="1500">
+            
+            <button id="btn-save-texts" class="cta-button" style="margin-top: 20px;">Save Text Content</button>
+            <span id="text-save-status" style="color: #4caf50; margin-left: 15px; font-weight: bold; display: none;">Saved Successfully!</span>
+        </div>
+
+        <!-- Feature Cards (Modal) Content Editing -->
+        <div class="admin-section">
+            <h3 style="color: #fff; margin-bottom: 15px; font-size: 1.5rem;">Edit Feature Cards (Inside Details)</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">You can edit the text structure of the popups. Basic HTML tags like &lt;p&gt;, &lt;strong&gt;, &lt;br&gt;, &lt;ul&gt;, &lt;li&gt; are supported to format paragraphs and lists. If you want to delete something, simply remove the text.</p>
+
+            <details>
+                <summary>1. Comprehensive Guide Details</summary>
+                <label>English Outline</label>
+                <textarea id="val-modal-guide-en" class="lg-textarea"></textarea>
+                <label>Sinhala Outline</label>
+                <textarea id="val-modal-guide-si" class="lg-textarea"></textarea>
+            </details>
+
+            <details>
+                <summary>2. Fast Delivery Details</summary>
+                <label>English Details</label>
+                <textarea id="val-modal-delivery-en" class="lg-textarea" style="height: 150px;"></textarea>
+                <label>Sinhala Details</label>
+                <textarea id="val-modal-delivery-si" class="lg-textarea" style="height: 150px;"></textarea>
+            </details>
+
+            <details>
+                <summary>3. Ready to get your copy Details</summary>
+                <label>English Details</label>
+                <textarea id="val-modal-order-en" class="lg-textarea" style="height: 150px;"></textarea>
+                <label>Sinhala Details</label>
+                <textarea id="val-modal-order-si" class="lg-textarea" style="height: 150px;"></textarea>
+            </details>
+
+            <button id="btn-save-modals" class="cta-button" style="margin-top: 15px;">Save Card Details</button>
+            <span id="modals-save-status" style="color: #4caf50; margin-left: 15px; font-weight: bold; display: none;">Saved Successfully!</span>
+        </div>
+
+        <!-- Photo Settings -->
+        <div class="admin-section">
+            <h3 style="color: #fff; margin-bottom: 15px; font-size: 1.5rem;">Website Photos</h3>
+            
+            <label>Main Hero Photo(s) - You can upload up to 2 photos</label>
+            <input type="file" id="admin-hero-upload" accept="image/*" multiple>
+            <div id="hero-preview" class="gallery-preview" style="margin: 10px 0;"></div>
+            <button id="btn-save-hero" class="cta-button" style="margin-bottom: 15px;">Update Main Photo(s)</button>
+            <button id="btn-clear-hero" style="margin-bottom: 30px; margin-left:10px; padding: 10px 20px; background: #c62828; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold;">Clear Hero Photos</button>
+
+            <hr style="border: 0; border-top: 1px dashed var(--card-border); margin-bottom: 30px;">
+
+            <label>Comprehensive Guide Gallery Photos (Inside the book photos - add as many as you want)</label>
+            <input type="file" id="admin-guide-upload" accept="image/*" multiple>
+            <button id="btn-add-guide" class="cta-button" style="margin-bottom: 15px;">Add Photos to Gallery</button>
+            <button id="btn-clear-guide" style="margin-bottom: 15px; margin-left:10px; padding: 10px 20px; background: #c62828; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold;">Clear All Gallery Photos</button>
+            
+            <p style="color: var(--text-muted); margin-top: 10px;">Current Gallery Photos:</p>
+            <div id="guide-preview" class="gallery-preview" style="display: flex; flex-wrap: wrap; margin-top: 10px;"></div>
+        </div>
+
+        <!-- Manage Feedbacks -->
+        <div class="admin-section">
+            <h3 style="color: #fff; margin-bottom: 15px; font-size: 1.5rem;">Manage Feedbacks</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">You can view and delete unwanted customer feedbacks here.</p>
+            
+            <div id="admin-feedbacks-list">
+                <!-- Javascript will inject list here -->
+                <p style="color: gray;">No feedbacks found.</p>
+            </div>
+            <button id="btn-clear-all-feedbacks" style="margin-top: 20px; padding: 10px 20px; background: transparent; border: 1px solid #c62828; color: #c62828; border-radius: 5px; cursor: pointer;">Delete All Feedbacks</button>
+        </div>
+
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
